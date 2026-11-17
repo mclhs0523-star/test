@@ -169,7 +169,49 @@ def head(num, title, sub, answer):
             f'<div class="steptitle"><h2>{html.escape(title)}{tag}</h2></div>'
             f'<div class="fsub">{html.escape(sub)}</div></div>')
 
+def pinl(t):
+    t = html.escape(t, quote=False)
+    return t.replace("[u]", "<u>").replace("[/u]", "</u>").replace("[b]", "<b>").replace("[/b]", "</b>")
+
+def passage_html(F):
+    """지문 원문 쪽 (2단). F["passage"] = [{"label": "가"|"", "items": [문단 | {"h"|"c"|"li"|"fn": 글} | {"table": {...}}]}]"""
+    sub = F["title"] + (f' · {F["source"]}' if F.get("source") else "")
+    P = F["passage"]; multi = len(P) > 1
+    if multi:
+        labs = [f'({p["label"]})' for p in P]
+        rng = f"{labs[0]}와 {labs[1]}" if len(labs) == 2 else f"{labs[0]}~{labs[-1]}"
+        line = f"다음 {rng}를 읽고 정리해 보자."
+    else:
+        line = "다음 글을 읽고 정리해 보자."
+    q = [f'<section>{head(0, "지문 원문", sub, False)}<div class="two"><p class="qset">{line}</p>']
+    for p in P:
+        if multi: q.append(f'<p class="plabel">({p["label"]})</p>')
+        for it in p["items"]:
+            if isinstance(it, str): q.append(f'<p class="pp">{pinl(it)}</p>')
+            elif "h" in it: q.append(f'<p class="ph">{pinl(it["h"])}</p>')
+            elif "c" in it: q.append(f'<p class="pc">{pinl(it["c"])}</p>')
+            elif "li" in it: q.append(f'<p class="pli">{pinl(it["li"])}</p>')
+            elif "fn" in it: q.append(f'<p class="pfn">{pinl(it["fn"])}</p>')
+            elif "table" in it:
+                T = it["table"]
+                q.append('<table class="ptb"><tr>' + "".join(f"<th>{h}</th>" for h in T["head"]) + "</tr>"
+                         + "".join("<tr>" + "".join(f"<td>{c}</td>" for c in r) + "</tr>" for r in T["rows"]) + "</table>"
+                         + f'<p class="pcap">{pinl(T["cap"])}</p>')
+    q.append("</div></section>")
+    return "".join(q)
+
+def page_parts(F, answer):
+    """[지문(있으면), 구조도, OX] 순서의 section HTML 목록."""
+    a, b = _page(F, answer)
+    out = []
+    if F.get("passage"):
+        out.append(passage_html(F)); a = a.replace("<section>", '<section class="pb">', 1)
+    return out + [a, b]
+
 def page_html(F, answer):
+    return "".join(page_parts(F, answer))
+
+def _page(F, answer):
     cx = Ctx(answer)
     sub = F["title"] + (f' · {F["source"]}' if F.get("source") else "")
     dg = "".join(node(n, cx) for n in F["diagram"])
@@ -188,9 +230,18 @@ def page_html(F, answer):
     b = (f'<section class="pb">{head(2, "고난도 OX 20", sub, answer)}'
          '<p class="finst">개념의 범주·조건·시점·주체가 조금이라도 어긋나면 X. 아래 빈칸에 판단 근거를 쓰세요.</p>'
          f'<table class="fox">{"".join(rows)}</table></section>')
-    return a + b
+    return a, b
 
 FCSS = f'''
+.ph{{font-family:"Lab";font-weight:700;margin:2.5mm 0 1mm;}}
+.pc{{font-family:"Lab";font-weight:700;text-align:center;margin:1mm 0 2.5mm;word-break:keep-all;}}
+.pli{{padding-left:1em;text-align:justify;}}
+.pfn{{font-size:8pt;line-height:1.5;margin-top:1.2mm;padding-left:.9em;text-indent:-.9em;}}
+.ptb{{width:100%;border-collapse:collapse;margin:2mm 0 .8mm;font-size:8.6pt;text-align:center;}}
+.ptb th,.ptb td{{border:.5pt solid #000;padding:.8mm;}}
+.ptb th{{font-family:"Lab";font-weight:400;background:#ebebeb;}}
+.pcap{{font-size:8pt;text-align:center;margin-bottom:2mm;}}
+
 .pb{{break-before:page;}}
 .stephead{{position:relative;}}
 .fsub{{position:absolute;right:0;bottom:2.2mm;font-family:"Lab";font-size:8.5pt;}}

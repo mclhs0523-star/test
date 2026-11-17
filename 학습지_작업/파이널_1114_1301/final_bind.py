@@ -16,25 +16,27 @@ def main():
     S.setup(wd); NAME = S.safe(title)
     heads = [{"no": f"{i:02d}", "title": F["title"]} for i, F in enumerate(sets, 1)]
 
+    NAMES = ["지문", "구조도", "OX 20"]
     def parts(F, h, answer):
-        html = FN.page_html(F, answer)
-        k = html.index('<section class="pb">')
-        dg, ox = html[:k], html[k:].replace('<section class="pb">', "<section>", 1)
-        return dg.replace("<section>", "<section>" + S.head_html(h), 1), ox
+        ps = [p.replace('<section class="pb">', "<section>", 1) for p in FN.page_parts(F, answer)]
+        ps[0] = ps[0].replace("<section>", "<section>" + S.head_html(h), 1)
+        return ps
 
     P = {ans: [parts(F, h, ans) for F, h in zip(sets, heads)] for ans in (False, True)}
-    alltxt = "".join(d + o for v in P.values() for d, o in v)
+    alltxt = "".join("".join(ps) for v in P.values() for ps in v)
     CS = S.css(alltxt + title + "차례본책정답과해설구조도OX20Final한눈에보는고난도0123456789·") + FN.FCSS
     outs = []
     with S.Renderer() as R:
         for ans in (False, True):
-            pdfs = [(R.pdf(d, CS), R.pdf(o, CS)) for d, o in P[ans]]
+            pdfs = [[R.pdf(x, CS) for x in ps] for ps in P[ans]]
             def entries(start):
                 out, p = [], start
-                for h, (dp, op) in zip(heads, pdfs):
-                    out.append({"no": h["no"], "title": h["title"], "page": p,
-                                "steps": [("구조도", p), ("OX 20", p + S.npages(dp))]})
-                    p += S.npages(dp) + S.npages(op)
+                for h, ps, F in zip(heads, pdfs, sets):
+                    nm = NAMES if F.get("passage") else NAMES[1:]
+                    e = {"no": h["no"], "title": h["title"], "page": p, "steps": []}
+                    for name, pf in zip(nm, ps):
+                        e["steps"].append((name, p)); p += S.npages(pf)
+                    out.append(e)
                 return out
             kind = "answers" if ans else "body"
             t = R.pdf(S.toc_html(title, entries(1), kind), CS); tn = S.npages(t)
