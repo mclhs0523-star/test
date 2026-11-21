@@ -1,0 +1,36 @@
+# Storyboard: 막차
+# Generator: kling
+# Model: 3.0
+# Aspect: 16:9
+# Brand-lock: brand-lock.snapshot.md
+# Run: 20261121T030607Z-858e7ea1
+# Round: 1
+# Note: Kling makes 5s minimum. Trim each clip to the shot length in the edit. Clips are silent; sound is added in the edit.
+
+# shot_01, 추격, 0.0-3.0s, WS eye-level static
+# params: model=Kling 3.0, duration=5s (trim to 3s), aspect_ratio=16:9, cfg=0.5, start_image=frames/round-1/shot_01.png, negative_prompt=text, letters, signage, logos, people, extra limbs, camera movement
+Static camera, locked off. A knee-high delivery robot: warm-white capsule body, stubby arms and legs, black round screen face with two white dot eyes, one orange antenna lamp. Plain brown taped cardboard box with three air holes. Over the shot the robot runs in from the left edge hugging the box, little legs pumping, while the double doors of a rounded silver subway car on the right third slowly slide shut. Empty night subway platform in side view: grey tiled floor along the bottom, track behind it, dark tunnel wall beyond. No people, signs or text. Soft teal neon strips along the ceiling, faint floor reflections, low contrast. Clean 2D cel animation, flat colors, thin even outlines, soft two-tone shading, deep navy night, muted teal, no grain.
+
+# shot_02, 미끄러짐, 3.0-7.0s, WS eye-level static
+# params: model=Kling 3.0, duration=5s (trim to 4s), aspect_ratio=16:9, cfg=0.5, start_image=frames/round-1/shot_02.png, negative_prompt=text, letters, signage, logos, people, extra limbs, camera movement
+Static camera, locked off. A knee-high delivery robot: warm-white capsule body, stubby arms and legs, black round screen face with two white dot eyes, one orange antenna lamp. Plain brown taped cardboard box with three air holes. The robot speeds toward the nearly closed doors of the silver subway car on the right third, slips, and falls flat on its back as the box flies forward out of its arms in a high arc. Empty night subway platform in side view: grey tiled floor along the bottom, track behind it, dark tunnel wall beyond. No people, signs or text. Soft teal neon strips along the ceiling, faint floor reflections, low contrast. Clean 2D cel animation, flat colors, thin even outlines, soft two-tone shading, deep navy night, muted teal, no grain.
+
+# shot_03, 놓침, 7.0-11.0s, WS eye-level static
+# params: model=Kling 3.0, duration=5s (trim to 4s), aspect_ratio=16:9, cfg=0.5, start_image=frames/round-1/shot_03.png, negative_prompt=text, letters, signage, logos, people, extra limbs, camera movement
+Static camera, locked off. A knee-high delivery robot: warm-white capsule body, stubby arms and legs, black round screen face with two white dot eyes, one orange antenna lamp. Plain brown taped cardboard box with three air holes. The box bumps the shut doors of the silver subway car and bounces back; the robot, sitting on the floor, catches it in both arms. Then the train glides away to the right and out of frame. Empty night subway platform in side view: grey tiled floor along the bottom, track behind it, dark tunnel wall beyond. No people, signs or text. Soft teal neon strips along the ceiling, faint floor reflections, low contrast. Clean 2D cel animation, flat colors, thin even outlines, soft two-tone shading, deep navy night, muted teal, no grain.
+
+# shot_04, 정적, 11.0-13.0s, WS eye-level static
+# params: model=Kling 3.0, duration=5s (trim to 2s), aspect_ratio=16:9, cfg=0.5, start_image=frames/round-1/shot_04.png, negative_prompt=text, letters, signage, logos, people, extra limbs, camera movement
+Static camera, locked off. A knee-high delivery robot: warm-white capsule body, stubby arms and legs, black round screen face with two white dot eyes, one orange antenna lamp. Plain brown taped cardboard box with three air holes. Almost nothing moves. The robot sits alone on the empty platform hugging the box, looking right where the train left; only its dot eyes blink once, slowly. Empty night subway platform in side view: grey tiled floor along the bottom, track behind it, dark tunnel wall beyond. No people, signs or text. Soft teal neon strips along the ceiling, faint floor reflections, low contrast. Clean 2D cel animation, flat colors, thin even outlines, soft two-tone shading, deep navy night, muted teal, no grain.
+
+# shot_05, 반전, 13.0-16.0s, WS eye-level static
+# params: model=Kling 3.0, duration=5s (trim to 3s), aspect_ratio=16:9, cfg=0.5, start_image=frames/round-1/shot_05.png, negative_prompt=text, letters, signage, logos, people, extra limbs, camera movement
+Static camera, locked off. A knee-high delivery robot: warm-white capsule body, stubby arms and legs, black round screen face with two white dot eyes, one orange antenna lamp. Plain brown taped cardboard box with three air holes. The silver subway car slowly reverses into frame from the right and stops with its double doors exactly in front of the seated robot. The doors slide open, warm white light spilling over the robot as it looks up. Empty night subway platform in side view: grey tiled floor along the bottom, track behind it, dark tunnel wall beyond. No people, signs or text. Soft teal neon strips along the ceiling, faint floor reflections, low contrast. Clean 2D cel animation, flat colors, thin even outlines, soft two-tone shading, deep navy night, muted teal, no grain.
+
+# shot_06, 탑승, 16.0-18.0s, WS eye-level static
+# params: model=Kling 3.0, duration=5s (trim to 2s), aspect_ratio=16:9, cfg=0.5, start_image=frames/round-1/shot_06.png, negative_prompt=text, letters, signage, logos, people, extra limbs, camera movement
+Static camera, locked off. A knee-high delivery robot: warm-white capsule body, stubby arms and legs, black round screen face with two white dot eyes, one orange antenna lamp. Plain brown taped cardboard box with three air holes. The robot springs to its feet hugging the box and hops through the open doors of the silver subway car into the warm white interior. Empty night subway platform in side view: grey tiled floor along the bottom, track behind it, dark tunnel wall beyond. No people, signs or text. Soft teal neon strips along the ceiling, faint floor reflections, low contrast. Clean 2D cel animation, flat colors, thin even outlines, soft two-tone shading, deep navy night, muted teal, no grain.
+
+# shot_07, 펀치라인, 18.0-20.0s, CU eye-level static
+# params: model=Kling 3.0, duration=5s (trim to 2s), aspect_ratio=16:9, cfg=0.5, start_image=frames/round-1/shot_07.png, negative_prompt=text, letters, signage, logos, people, extra limbs, camera movement
+Static camera, locked off. A plain brown taped cardboard box with three air holes in small warm-white robot arms. Door panels slide in from both frame edges; one lid flap lifts and a tiny grey tabby kitten with a white muzzle and green eyes peeks out and gives one short meow. Inside the subway car doorway at night, door panels closing in from both frame edges. No people, signs or text. Warm white light from inside the train lights the box from the front; faint teal neon beyond the doors. Clean 2D cel animation, flat colors, thin even outlines, soft two-tone shading, deep navy night, muted teal, no grain.

@@ -1,0 +1,36 @@
+# Storyboard: 막차
+# Generator: flux
+# Model: 2 Pro
+# Aspect: 16:9
+# Brand-lock: brand-lock.snapshot.md
+# Run: 20261121T030607Z-858e7ea1
+# Round: 1
+# Note: 2D animation, so the adapter's photoreal closing line is replaced with "No text, no logos."
+
+# shot_01, 추격, 0.0-3.0s, WS eye-level static
+# params: aspect_ratio=16:9, seed=7310, prompt_upsampling=false, output_format=png
+Wide side-view shot, camera at eye level, locked off, everything in sharp focus. A knee-high delivery robot: warm-white capsule body, stubby arms and legs, black round screen face with two white dot eyes, one orange antenna lamp. Plain brown taped cardboard box with three air holes. The robot sprints in from the left edge hugging the box, leaning forward. On the right third, a rounded silver subway car glows warm white inside, its double doors starting to slide shut. Empty night subway platform in side view: grey tiled floor along the bottom, track behind it, dark tunnel wall beyond. No people, signs or text. Soft teal neon strips along the ceiling, faint floor reflections, low contrast. Clean 2D cel animation, flat colors, thin even outlines, soft two-tone shading, deep navy night, muted teal, no grain. No text, no logos.
+
+# shot_02, 미끄러짐, 3.0-7.0s, WS eye-level static
+# params: aspect_ratio=16:9, seed=7310, prompt_upsampling=false, output_format=png
+Wide side-view shot, camera at eye level, locked off, everything in sharp focus. A knee-high delivery robot: warm-white capsule body, stubby arms and legs, black round screen face with two white dot eyes, one orange antenna lamp. Plain brown taped cardboard box with three air holes. Just in front of the nearly closed train doors on the right third, the robot slips and tips over backward, feet in the air, while the box flies out of its arms in an arc toward the doors. Empty night subway platform in side view: grey tiled floor along the bottom, track behind it, dark tunnel wall beyond. No people, signs or text. Soft teal neon strips along the ceiling, faint floor reflections, low contrast. Clean 2D cel animation, flat colors, thin even outlines, soft two-tone shading, deep navy night, muted teal, no grain. No text, no logos.
+
+# shot_03, 놓침, 7.0-11.0s, WS eye-level static
+# params: aspect_ratio=16:9, seed=7310, prompt_upsampling=false, output_format=png
+Wide side-view shot, camera at eye level, locked off, everything in sharp focus. A knee-high delivery robot: warm-white capsule body, stubby arms and legs, black round screen face with two white dot eyes, one orange antenna lamp. Plain brown taped cardboard box with three air holes. The box bounces off the shut doors of the silver subway car on the right third and drops back into the arms of the robot, sitting on the floor. The train begins to glide off to the right. Empty night subway platform in side view: grey tiled floor along the bottom, track behind it, dark tunnel wall beyond. No people, signs or text. Soft teal neon strips along the ceiling, faint floor reflections, low contrast. Clean 2D cel animation, flat colors, thin even outlines, soft two-tone shading, deep navy night, muted teal, no grain. No text, no logos.
+
+# shot_04, 정적, 11.0-13.0s, WS eye-level static
+# params: aspect_ratio=16:9, seed=7310, prompt_upsampling=false, output_format=png
+Wide side-view shot, camera at eye level, locked off, everything in sharp focus. A knee-high delivery robot: warm-white capsule body, stubby arms and legs, black round screen face with two white dot eyes, one orange antenna lamp. Plain brown taped cardboard box with three air holes. The train is gone. The robot sits alone on the floor at the right third, hugging the box, staring at the empty track to the right. Nothing moves. Empty night subway platform in side view: grey tiled floor along the bottom, track behind it, dark tunnel wall beyond. No people, signs or text. Soft teal neon strips along the ceiling, faint floor reflections, low contrast. Clean 2D cel animation, flat colors, thin even outlines, soft two-tone shading, deep navy night, muted teal, no grain. No text, no logos.
+
+# shot_05, 반전, 13.0-16.0s, WS eye-level static
+# params: aspect_ratio=16:9, seed=7310, prompt_upsampling=false, output_format=png
+Wide side-view shot, camera at eye level, locked off, everything in sharp focus. A knee-high delivery robot: warm-white capsule body, stubby arms and legs, black round screen face with two white dot eyes, one orange antenna lamp. Plain brown taped cardboard box with three air holes. The silver subway car has backed in from the right and stopped with its double doors open right in front of the seated robot, warm white light spilling over the floor and the robot as it looks up. Empty night subway platform in side view: grey tiled floor along the bottom, track behind it, dark tunnel wall beyond. No people, signs or text. Soft teal neon strips along the ceiling, faint floor reflections, low contrast. Clean 2D cel animation, flat colors, thin even outlines, soft two-tone shading, deep navy night, muted teal, no grain. No text, no logos.
+
+# shot_06, 탑승, 16.0-18.0s, WS eye-level static
+# params: aspect_ratio=16:9, seed=7310, prompt_upsampling=false, output_format=png
+Wide side-view shot, camera at eye level, locked off, everything in sharp focus. A knee-high delivery robot: warm-white capsule body, stubby arms and legs, black round screen face with two white dot eyes, one orange antenna lamp. Plain brown taped cardboard box with three air holes. The robot hops up through the open doors of the silver subway car on the right third, hugging the box, silhouetted against the warm white interior. Empty night subway platform in side view: grey tiled floor along the bottom, track behind it, dark tunnel wall beyond. No people, signs or text. Soft teal neon strips along the ceiling, faint floor reflections, low contrast. Clean 2D cel animation, flat colors, thin even outlines, soft two-tone shading, deep navy night, muted teal, no grain. No text, no logos.
+
+# shot_07, 펀치라인, 18.0-20.0s, CU eye-level static
+# params: aspect_ratio=16:9, seed=7310, prompt_upsampling=false, output_format=png
+Close-up, camera at eye level, locked off, shallow focus, background soft. A plain brown taped cardboard box with three air holes, held in small warm-white robot arms. One lid flap lifts slightly and a tiny grey tabby kitten with a white muzzle and green eyes peeks out. Inside the subway car doorway at night, door panels closing in from both frame edges. No people, signs or text. Warm white light from inside the train lights the box from the front; faint teal neon beyond the doors. Clean 2D cel animation, flat colors, thin even outlines, soft two-tone shading, deep navy night, muted teal, no grain. No text, no logos.
