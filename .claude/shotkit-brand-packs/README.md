@@ -1,0 +1,66 @@
+# Brand Packs
+
+A brand pack is a single Markdown file that locks in palette, typography, voice, and visual rules for a project. The skills in this pack consume it. Every storyboard, every prompt, every generated frame inherits from it.
+
+## How to get one
+
+Most people should not write a brand pack by hand. Three routes, in this order:
+
+1. **Point Shotkit at your site.** This is the default. Put the address in the brief, or ask:
+
+   > "Write a brand lock from acme.com."
+
+   The `brand-lock-extractor` skill reads the site and writes the file in this exact format. A brand book PDF or screenshots work the same way. Every value carries its source, and a guess is marked `needs confirmation`. Read those before real work.
+
+2. **No brand yet.** A brief that names no brand runs on `_starter.md`, a neutral, filled-in lock. The run says it used the starter. Replace it before real work.
+
+3. **By hand.** The manual, advanced route. Copy `_template.md` to a new file (e.g. `acme.md`) and fill in every field. No placeholders left behind. Use it when there is no site, PDF or screenshot to read, or when you want to set every value yourself.
+
+## How to use
+
+1. Reference the pack from your storyboard requests:
+
+   > "30-second founder explainer. Use `brand-packs/acme.md` as the brand lock."
+
+2. The skill reads it, snapshots it into the output as `brand-lock.snapshot.md`, and applies it through the pipeline.
+
+## How to write a good one
+
+These rules apply to a generated lock you are reviewing and to one written by hand. The template is a checklist, not a creative-writing exercise. Three rules:
+
+**Be specific.** "Modern, clean, professional" is not a brand. "Calm, considered, operator energy, confident without shouting" is.
+
+**Be exclusive.** The "never" list is more valuable than the "always" list. Listing what the brand will not do narrows the generator's space and produces tighter output.
+
+**Be hex-precise.** Every color is a hex value. Every font is named. The skills consume structured data; vagueness here cascades into bad prompts later.
+
+## Examples
+
+The pack ships with two reference brand packs:
+
+- **`whystrohm.md`** (flagship). The brand pack WhyStrohm uses on its own content: dark ground, one accent, Archivo and IBM Plex Mono. Real palette, real voice rules, real "never" list. Use this as the reference for the level of specificity production work requires.
+- **`examples/saas-clean.md`**. B2B SaaS, restrained, professional. Light backgrounds, single accent. Inter type stack. A neutral counterpoint to the WhyStrohm flagship.
+
+PRs welcome.
+
+## Generating a brand pack from existing assets
+
+This is the default route above, in more detail. The **`brand-lock-extractor`** skill (ships in this repo at `skills/brand-lock-extractor/`) takes a website URL, a brand book PDF, screenshots, or a written description and produces a `brand-lock.md` in this exact format, with a confidence and source noted for every value:
+
+> "Extract a brand-lock from acme.com" or "build a brand pack from this brand book PDF."
+
+[media-tsunami](https://github.com/whystrohm/media-tsunami) extracts brand voice from a URL into a CLAUDE.md and a brand-config.json. It does not write a brand-lock. Its voice findings are a good source for a brand-lock's voice rules, which you then fill in by hand or with `brand-lock-extractor`.
+
+## Versioning
+
+Every storyboard run snapshots the brand pack it was built against. If you update `acme.md` later, previous storyboards still reference the version they were built on. This is intentional, the audit trail tells you exactly what brand state any given piece of content was built against.
+
+When you make a brand-pack revision that materially changes look or voice, bump the `Version:` field at the bottom and note the change. e.g.:
+
+```
+Version: 1.1 (2026-05-12: switched accent from #D94F3A to #C44233)
+```
+
+## Contributing examples
+
+PRs welcome for new brand-pack examples that fill gaps in the current set. Open an issue with the `brand-pack-request` template before submitting.

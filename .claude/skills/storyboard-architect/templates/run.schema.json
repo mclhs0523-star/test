@@ -1,0 +1,170 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://whystrohm.com/schemas/shotkit/run.schema.json",
+  "title": "Run",
+  "description": "Written once by storyboard-architect, after shots.json, text-overlays.json and brand-lock.snapshot.md are final. Everything except rounds is write-once and never edited. rounds is append-only: visual-prompt-forge adds one entry per prompt round and never changes an earlier entry. Pins every input by content hash, so six months later you can prove which brand-lock, shot list, and text spec a set of frames was produced against, rather than trusting that the files sitting next to them are the originals. Everything downstream (prompts, frames, critiques) is addressed by round and shot id under the output root, so no two operators write the same path. Validated by tools/validate_provenance.py.",
+  "type": "object",
+  "required": ["version", "run_id", "created_at", "shotkit_version", "project", "inputs"],
+  "additionalProperties": false,
+  "properties": {
+    "version": { "type": "string", "const": "1.0" },
+    "meta": {
+      "type": "object",
+      "description": "Forward-compat passthrough. Ignored by core skills.",
+      "additionalProperties": true
+    },
+    "run_id": {
+      "type": "string",
+      "pattern": "^[0-9]{8}T[0-9]{6}Z-[0-9a-f]{8}$",
+      "description": "UTC compact timestamp, a dash, then 8 hex characters. Example: 20260730T142300Z-9f2c1ab4. The hex suffix distinguishes two runs started in the same second by different operators."
+    },
+    "created_at": {
+      "type": "string",
+      "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}Z$",
+      "description": "UTC ISO-8601 instant the run started. Must agree with the timestamp embedded in run_id."
+    },
+    "shotkit_version": {
+      "type": "string",
+      "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$",
+      "description": "Version of shotkit that produced the run. Read line 1 of ~/.claude/shotkit-tools/VERSION (written by install.sh), or VERSION at the root of a repo clone."
+    },
+    "operator": {
+      "oneOf": [
+        { "type": "null" },
+        { "type": "string", "minLength": 1 }
+      ],
+      "description": "Who started the run. Free text: a name, a handle, or a CI job id. Null when nobody recorded it."
+    },
+    "project": {
+      "type": "object",
+      "required": ["title", "duration_s", "aspect"],
+      "additionalProperties": false,
+      "properties": {
+        "title": { "type": "string", "minLength": 1 },
+        "duration_s": { "type": "number", "exclusiveMinimum": 0 },
+        "aspect": {
+          "type": "string",
+          "enum": ["16:9", "9:16", "1:1", "4:5", "21:9"]
+        },
+        "framework": { "type": "string", "minLength": 1 },
+        "seed": {
+          "oneOf": [
+            { "type": "null" },
+            { "type": "integer", "minimum": 0 }
+          ],
+          "description": "Copied from shots.json project.seed when it is set."
+        }
+      }
+    },
+    "inputs": {
+      "type": "object",
+      "description": "Every file the run was built from, by path and by hash. Paths are relative to the output directory root.",
+      "required": [
+        "shots_ref", "shots_sha256",
+        "text_overlays_ref", "text_overlays_sha256",
+        "brand_lock_ref", "brand_lock_sha256", "brand_lock_source"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "shots_ref": { "type": "string", "minLength": 1 },
+        "shots_sha256": { "type": "string", "pattern": "^[0-9a-f]{64}$" },
+        "text_overlays_ref": {
+          "oneOf": [
+            { "type": "null" },
+            { "type": "string", "minLength": 1 }
+          ],
+          "description": "Null for a storyboard with no on-screen text."
+        },
+        "text_overlays_sha256": {
+          "oneOf": [
+            { "type": "null" },
+            { "type": "string", "pattern": "^[0-9a-f]{64}$" }
+          ]
+        },
+        "brand_lock_ref": { "type": "string", "minLength": 1 },
+        "brand_lock_sha256": { "type": "string", "pattern": "^[0-9a-f]{64}$" },
+        "brand_lock_source": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Where the snapshot was copied from, e.g. 'brand-packs/whystrohm.md'. The literal string 'template default' records an UNCONFIGURED run built from brand-packs/_template.md."
+        },
+        "brand_lock_configured": {
+          "type": "boolean",
+          "description": "False when the snapshot is an unfilled template. tools/validate_brand_lock.py --require-configured is what decides this."
+        }
+      }
+    },
+    "brief_sources": {
+      "type": "object",
+      "description": "Optional. Where each item of the brief came from, as the planner recorded it when the run was written. Keys name the item: purpose, audience, duration, aspect, framework, voiceover, audio, brand_lock, generators, or another short name. 'given' means it was in the brief or in a file the user supplied. 'suggested' means the planner chose it, as a default or a proposal. 'to_confirm' means the planner filled it and the user has to confirm it before real work, such as a starter brand or a guessed audience. Written once with the rest of run.json. An item left out has no recorded source.",
+      "propertyNames": { "pattern": "^[a-z][a-z0-9_]*$" },
+      "additionalProperties": {
+        "type": "string",
+        "enum": ["given", "suggested", "to_confirm"]
+      }
+    },
+    "generators": {
+      "type": "array",
+      "description": "Generators targeted by this run, with the model version current at run time. The capability matrix records what is current now; this records what was current then.",
+      "items": {
+        "type": "object",
+        "required": ["id", "model_version"],
+        "additionalProperties": false,
+        "properties": {
+          "id": { "type": "string", "pattern": "^[a-z0-9][a-z0-9-]*$" },
+          "model_version": { "type": "string", "minLength": 1 },
+          "capabilities_sha256": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{64}$",
+            "description": "SHA-256 of _capabilities.json as read, so a later matrix edit is detectable."
+          }
+        }
+      }
+    },
+    "rounds": {
+      "type": "array",
+      "description": "Append-only. One entry per prompt round, added by visual-prompt-forge; an earlier entry is never edited. Each round records the prompt files it produced. Frames and critiques are found on disk under frames/round-N/ and critiques/round-N/, not listed here, so two operators working the same round never write the same JSON.",
+      "items": {
+        "type": "object",
+        "required": ["round", "started_at", "prompts"],
+        "additionalProperties": false,
+        "properties": {
+          "round": { "type": "integer", "minimum": 1 },
+          "started_at": {
+            "type": "string",
+            "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}Z$"
+          },
+          "reason": {
+            "type": "string",
+            "minLength": 1,
+            "description": "Why this round exists. Round 1 is 'initial'. Later rounds cite the critiques that triggered them."
+          },
+          "prompts": {
+            "type": "array",
+            "minItems": 1,
+            "items": {
+              "type": "object",
+              "required": ["generator", "ref", "sha256"],
+              "additionalProperties": false,
+              "properties": {
+                "generator": { "type": "string", "pattern": "^[a-z0-9][a-z0-9-]*$" },
+                "ref": { "type": "string", "minLength": 1 },
+                "sha256": { "type": "string", "pattern": "^[0-9a-f]{64}$" },
+                "shot_ids": {
+                  "type": "array",
+                  "items": { "type": "string", "pattern": "^shot_[0-9]{2,3}$" },
+                  "description": "Which shots this file covers. A full pass lists every shot; a revision file lists only the shots it re-emitted."
+                }
+              }
+            }
+          },
+          "post_only_shots": {
+            "type": "array",
+            "items": { "type": "string", "pattern": "^shot_[0-9]{2,3}$" },
+            "description": "Shots whose only outstanding issues are post-level. They get no new prompt, so without this list the compositing obligation exists nowhere on disk."
+          }
+        }
+      }
+    }
+  }
+}

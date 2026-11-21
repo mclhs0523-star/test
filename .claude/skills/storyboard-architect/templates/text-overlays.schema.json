@@ -1,0 +1,141 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://whystrohm.com/schemas/shotkit/text-overlays.schema.json",
+  "title": "Text Overlays",
+  "description": "On-screen text elements that get composited over generated images. Never baked into prompts.",
+  "type": "object",
+  "required": ["version", "overlays"],
+  "additionalProperties": false,
+  "properties": {
+    "version": {
+      "type": "string",
+      "const": "1.0"
+    },
+    "overlays": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "id", "shot_id", "content",
+          "font", "size", "weight", "color",
+          "position", "enter", "exit"
+        ],
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "type": "string",
+            "pattern": "^text_[0-9]{2,3}$"
+          },
+          "shot_id": {
+            "oneOf": [
+              { "type": "string", "pattern": "^shot_[0-9]{2,3}$" },
+              {
+                "type": "array",
+                "minItems": 2,
+                "items": { "type": "string", "pattern": "^shot_[0-9]{2,3}$" }
+              }
+            ],
+            "description": "Single shot ID, or array of consecutive shot IDs for persistent overlays."
+          },
+          "content": { "type": "string", "minLength": 1 },
+          "font": {
+            "type": "string",
+            "description": "Must reference a font defined in brand-lock typography."
+          },
+          "size": {
+            "type": "string",
+            "enum": ["display", "headline", "body", "caption"]
+          },
+          "weight": {
+            "type": "string",
+            "enum": ["regular", "medium", "semibold", "bold", "extrabold", "black"],
+            "description": "CSS weights: regular 400, medium 500, semibold 600, bold 700, extrabold 800, black 900."
+          },
+          "color": {
+            "type": "string",
+            "pattern": "^#[0-9A-Fa-f]{6}$",
+            "description": "Hex value. Must come from brand-lock palette."
+          },
+          "kicker": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 48,
+            "description": "Optional. A short label set small above the line, in spaced capitals after a rule in the accent. A fact from the brief: a product name, a place, a step. Never a slogan."
+          },
+          "emphasis": {
+            "type": "string",
+            "minLength": 1,
+            "description": "Optional. The words that carry the line, copied exactly from content."
+          },
+          "emphasis_style": {
+            "enum": ["bar", "color"],
+            "description": "Optional. bar (the default): the words keep their colour and get a bar in the accent under them, which reads over any picture. color: the words take the accent colour. Use color only where the frame behind the type is dark and flat."
+          },
+          "accent": {
+            "type": "string",
+            "pattern": "^#[0-9A-Fa-f]{6}$",
+            "description": "Optional. The accent for the rule, the emphasis and the lockup mark. Must come from the brand-lock palette. Defaults to the palette's accent."
+          },
+          "treatment": {
+            "enum": ["plain", "plate", "lockup"],
+            "description": "Optional. plain: type on a soft field (the default). plate: type on a solid plate, for a frame too busy to carry type alone. lockup: a brand or product name as small spaced capitals after a square in the accent."
+          },
+          "plate": {
+            "type": "string",
+            "pattern": "^#[0-9A-Fa-f]{6}$",
+            "description": "Optional, with treatment plate. The plate's colour. Must come from the brand-lock palette."
+          },
+          "case": {
+            "enum": ["sentence", "upper"],
+            "description": "Optional. upper sets the line in capitals with wider spacing. Use it for three words or fewer."
+          },
+          "position": {
+            "oneOf": [
+              {
+                "type": "string",
+                "enum": [
+                  "center",
+                  "lower-third", "upper-third",
+                  "left-third", "right-third"
+                ]
+              },
+              {
+                "type": "object",
+                "required": ["x", "y"],
+                "additionalProperties": false,
+                "properties": {
+                  "x": { "type": "number", "minimum": 0, "maximum": 100 },
+                  "y": { "type": "number", "minimum": 0, "maximum": 100 }
+                }
+              }
+            ]
+          },
+          "enter": {
+            "type": "object",
+            "required": ["at", "animation"],
+            "additionalProperties": false,
+            "properties": {
+              "at": { "type": "number", "minimum": 0 },
+              "animation": {
+                "type": "string",
+                "enum": ["fade-in", "slide-up", "slide-down", "type-on", "hard-cut"]
+              }
+            }
+          },
+          "exit": {
+            "type": "object",
+            "required": ["at", "animation"],
+            "additionalProperties": false,
+            "properties": {
+              "at": { "type": "number", "minimum": 0 },
+              "animation": {
+                "type": "string",
+                "enum": ["fade-out", "slide-up", "slide-down", "hard-cut"]
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
